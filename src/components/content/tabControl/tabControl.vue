@@ -38,7 +38,7 @@ export default {
   .tab-control {
     display: flex;
     text-align: center;
-    font-size: 15px;
+    font-size: 17px;
     height: 40px;
     line-height: 40px;
     background-color: #fff;
