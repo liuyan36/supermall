@@ -1,7 +1,12 @@
 <template>
   <div id="home">
     <nav-bar class="home-nav"><div slot="center">购物街</div></nav-bar>
-    <scroll class="centent">
+    <scroll class="centent"
+            ref="scroll"
+            :probe-type="3"
+            @scroll="contenScroll"
+            :pull-up-load="true"
+            @pullingUp="loadmore">
       <home-swiper :banners="banners"/>
       <recommend-view :recommends="recommends"></recommend-view>
       <feature/>
@@ -11,6 +16,8 @@
       </tab-control>
       <goods-list :goods="showGoods"></goods-list>
     </scroll>
+    <back-top @click.native="backClick" v-show="isShowBscroll"/> <!--
+      在我们需要监听一个组件的原生事件时，必须给对应得的事件加上.native才能进行监听组件 -->
   </div>
 </template>
 
@@ -22,7 +29,8 @@
   import NavBar from '@/components/common/navbar/NavBar'
   import TabControl from '@/components/content/tabControl/tabControl'
   import GoodsList from '@/components/content/goods/goodsList'
-  import Scroll from '@/components/content/scroll/Scroll'
+  import Scroll from '@/components/common/scroll/Scroll'
+  import BackTop from '@/components/content/backtop/BackTop'
 
   import {getHomeMultidata,getHomeGoods} from '@/network/home'
   export default {
@@ -34,7 +42,8 @@
       Feature,
       TabControl,
       GoodsList,
-      Scroll
+      Scroll,
+      BackTop
     },
     data () {
       return {
@@ -46,7 +55,8 @@
           'new': {page: 0, list: []},
           'sell': {page: 0, list: []}
         },
-        currentType: 'pop'
+        currentType: 'pop',
+        isShowBscroll: false
       }
     },
     created() {
@@ -79,6 +89,17 @@
               break
           }
         },
+        backClick() {
+          this.$refs.scroll.scrollTo(0, 0)
+        },
+        contenScroll(position) {
+          this.isShowBscroll = (-position.y) > 1000
+        },
+        loadmore() {
+          this.getHomeGoods(this.currentType)
+
+          // this.$refs.scroll.scroll.refresh()
+        },
        /*
        网络请求相关的
         */
@@ -97,6 +118,8 @@
             this.goods[type].list.push(...res.data.list)
             // console.log(this.goods[type].list)
             this.goods[type].page += 1
+
+            this.$refs.scroll.finishPullUp()
           })
         }
       }
@@ -134,7 +157,7 @@
     right: 0;
   } */
   .centent {
-    height: calc(100% - 49px);
+    height: calc(100% - 54px);
     overflow: hidden;
   }
 </style>
