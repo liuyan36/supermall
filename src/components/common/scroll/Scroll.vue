@@ -44,6 +44,7 @@ export default {
     }
 
     this.scroll.refresh()  // 图片用完调用refresh
+
     // 3.监听上拉加载更多,scroll滚动底部
     if (this.pullUpLoad) {
       this.scroll.on('pullingUp', () => { // pullingUp(上拉下拉加载之类的用法)
@@ -57,7 +58,6 @@ export default {
       this.scroll && this.scroll.scrollTo && this.scroll.scrollTo(x, y, time)
     },
     refresh() {
-      console.log('-----')
       this.scroll && this.scroll.scrollTo && this.scroll.refresh()
     },
     finishPullUp() {

@@ -34,12 +34,17 @@
   import Scroll from '@/components/common/scroll/Scroll'
   import TabControl from '@/components/content/tabControl/tabControl'
   import GoodsList from '@/components/content/goods/goodsList'
-  import BackTop from '@/components/content/backtop/BackTop'
 
   import {getHomeMultidata,getHomeGoods} from '@/network/home'
   import {debounce} from '@/common/uttilts'
+  import {itemListenetMixin, backTopMixin} from '@/common/mixin'
+
   export default {
     name: "Home",
+    mixins: [
+      itemListenetMixin,
+      backTopMixin
+    ],
     components: {
       NavBar,
       HomeSwiper,
@@ -47,8 +52,7 @@
       Feature,
       TabControl,
       GoodsList,
-      Scroll,
-      BackTop
+      Scroll
     },
     data () {
       return {
@@ -61,7 +65,6 @@
           'sell': {page: 0, list: []}
         },
         currentType: 'pop',
-        isShowBscroll: false,
         tabOffsetTop: 0,
         isTabFiexd: false,     // 用来判断是否吸顶
         savey: 0
@@ -84,7 +87,7 @@
        console.log('this  home')
      },
      activated() { // 进来时保存的位置
-       this.$refs.scroll.scrollTo(0, this.savey, 0)
+       this.$refs.scroll.scrollTo(0, this.savey)
        // 滚动完后做一次刷新
        this.$refs.scroll.refresh()
      },
@@ -92,13 +95,18 @@
        // 设置完这个位置后，进来时会有ao
        console.log(this.$refs.scroll.getScrollY())
        this.savey = this.$refs.scroll.getScrollY()
+
+       // 取消全局事件监听
+      this.$bus.$off('imgLoad', this.itemimglistener)
      },
      mounted()  {
        // 1.图片加载完的事件监听
-      const refresh = debounce(this.$refs.scroll.refresh)
-      this.$bus.$on('imgLoad', () => {
-       refresh()
-      })
+      // const refresh = debounce(this.$refs.scroll.refresh)
+
+      // this.itemimglistener = () => {
+      //  refresh()
+      // }
+      // this.$bus.$on('imgLoad', this.itemimglistener)
        // 2.获取tabControl的offsetTop
        // 所有的组件都有一个熟悉，$el:用于获取组件中的元素
       //  this.tabOffsetTop = this.$refs.tabControl.offsetTop
@@ -122,13 +130,10 @@
           this.$refs.tabControl1.countIndex = index   // 在tab-control中，使用那个吸顶效果的来 指定点击同步
           this.$refs.tabControl2.countIndex = index
         },
-        backClick() {
-          this.$refs.scroll.scrollTo(0, 0)
-        },
         contenScroll(position) {
-          // 判断我们的Bscroll是否显示
-          this.isShowBscroll = (-position.y) > 1000 // 这个地方来判断y轴的地方  大于1000显示
-
+          // 判断我们的Bscroll是否显示,我们将吸顶效果加入混入中，减少代码量
+          // this.isShowBscroll = (-position.y) > 1000 // 这个地方来判断y轴的地方  大于1000显示
+              this.listBackTop(position)
           // 2.决定tabControl是否吸顶（position： fixed）
           this.isTabFiexd = (-position.y) > this.tabOffsetTop
         },
