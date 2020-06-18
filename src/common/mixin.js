@@ -20,7 +20,7 @@ export const itemListenetMixin = {
 export const backTopMixin = {
   data() {
     return {
-      isShowBscroll: true,
+      isShowBscroll: false, // 开启时是需要关闭的
     }
   },
   components: {
@@ -29,7 +29,6 @@ export const backTopMixin = {
   methods: {
     backClick() {
       this.$refs.scroll.scrollTo(0, 0)
-      console.log('1111111')
     },
     listBackTop(position) {
       this.isShowBscroll = -position.y > 1000

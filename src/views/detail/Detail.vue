@@ -135,8 +135,6 @@ export default {
       // positionY在 4347 到 Number.MAX_VALUE之间， index = 3
 
       // positionY 大于等于 4347的值， index = 3
-
-      // 第二次重复
       let length = this.themeTopYs.length
       for (let i = 0; i < length-1; i++) {
         if(this.currentIndex !== i && (positionY >= this.themeTopYs[i] && positionY < this.themeTopYs[i+1])) {
