@@ -1,7 +1,10 @@
 <template>
   <div class="bottom-bar">
     <div class="check-content">
-      <check-button :is-checked="isSelectAll" class="check-nav"/>
+      <check-button
+                  :is-checked="isSelectAll"
+                  class="check-nav"
+                  @click.native="checkClick"/>
       <span>全选</span>
     </div>
 
@@ -9,7 +12,7 @@
       合计: {{totalPrice}}
     </div>
 
-    <div class="calculate">
+    <div class="calculate" @click="caluClick">
       去计算: {{checkLength}}
     </div>
   </div>
@@ -25,6 +28,11 @@ export default {
   components: {
     CheckButton
   },
+  data() {
+    return {
+      aaa: true
+    }
+  },
   computed: {
     ...mapGetters(['cartList']),
     // 计算属性中 合计算法
@@ -39,7 +47,6 @@ export default {
       return this.cartList.filter(item => item.checked).length
     },
     isSelectAll() {
-
      if (this.cartList.length === 0) return false // 必须添加的判断条件
     // 1.使用filter方法
 
@@ -53,6 +60,28 @@ export default {
         }
       }
       return true
+    }
+  },
+  methods: {
+    checkClick() {
+      if (this.isSelectAll) { // 全部选中的情况下
+      // 将所有的改变成不选中
+        this.cartList.forEach(item => item.checked = false)
+      } else { // 全部不选中的情况下
+      // 将所有改变成选中
+        this.cartList.forEach(item => item.checked = true)
+      }
+    },
+    caluClick() {
+      // 在购物车中没有购买商品时点击出现的弹窗
+      if (!this.isSelectAll) {
+        this.$toast.show('请选择购买的商品', 2000)
+       }
+       // else {
+      //   this.$toast.show('请结算' + this.totalPrice , 2000)
+      // }
+
+
     }
   }
 }

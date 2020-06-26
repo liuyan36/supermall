@@ -84,7 +84,7 @@
        }
      },
      destroyed() {
-       console.log('this  home')
+      //  console.log('this  home')
      },
      activated() { // 进来时保存的位置
        this.$refs.scroll.scrollTo(0, this.savey)
@@ -93,7 +93,7 @@
      },
      deactivated() {
        // 设置完这个位置后，进来时会有ao
-       console.log(this.$refs.scroll.getScrollY())
+      //  console.log(this.$refs.scroll.getScrollY())
        this.savey = this.$refs.scroll.getScrollY()
 
        // 取消全局事件监听
@@ -149,6 +149,7 @@
        getHomeMultidata() {
          getHomeMultidata().then(res => {
         //  this.result = res
+        // console.log(res)
         this.banners = res.data.banner.list
         this.recommends = res.data.recommend.list
         })
@@ -156,6 +157,7 @@
        getHomeGoods(type) {
          const page = this.goods[type].page + 1
           getHomeGoods(type, page).then(res => {
+            console.log(res)
             this.goods[type].list.push(...res.data.list)
             // console.log(this.goods[type].list)
             this.goods[type].page += 1

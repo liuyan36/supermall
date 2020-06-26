@@ -16,6 +16,7 @@
     </scroll>
     <detail-botton-bar @addToCart="addToCart"/>
     <back-top @click.native="backClick" v-show="isShowBscroll"/>
+    <!-- <toast :message="message" :show="show"/> -->
   </div>
 </template>
 
@@ -31,10 +32,12 @@ import DetailBottonBar from './childComps/DetailBottonBar'
 
 import Scroll from '@/components/common/scroll/Scroll'
 import GoodsList from '@/components/content/goods/goodsList'
+// import Toast from '@/components/common/toast/Toast'
 
 import {getDetail, Goods, Shop, GoodsParam, getRecommend} from '../../network/detail'
 import {debounce} from '@/common/uttilts'
 import {itemListenetMixin, backTopMixin} from '@/common/mixin'
+import {mapActions} from 'vuex'
 
 export default {
   name: "Detail",
@@ -52,7 +55,8 @@ export default {
     DetailProps,
     DetailCommentInfo,
     GoodsList,
-    DetailBottonBar
+    DetailBottonBar,
+    // Toast
   },
   data() {
     return {
@@ -66,6 +70,8 @@ export default {
       recommend: [],
       themeTopYs: [],
       currentIndex: 0,
+      // message: '',
+      // show: false
     }
   },
   created() {
@@ -74,11 +80,12 @@ export default {
 
     // 根据我们的iid请求数据
     getDetail(this.iid).then(res => {
-      // console.log(res)
+      console.log(res)
       const data = res.result
 
     // 获取顶部轮播图片
       this.topImages = res.result.itemInfo.topImages
+
 
     // 获取我们的商品信息
       this.goods = new Goods(data.itemInfo, data.columns, data.shopInfo.services)
@@ -109,6 +116,8 @@ export default {
     this.$bus.$off('imgLoad', this.itemimglistener)
   },
   methods: {
+    ...mapActions(['addToCart']),
+
     imageLoad() {
       this.$refs.scroll.refresh()
       this.themeTopYs = []
@@ -159,6 +168,7 @@ export default {
     //   this.$store.commit('addCart', product)
     // }
     addToCart(){
+      // 获取购物车需要展示的信息
       const product = {}
       product.image = this.topImages[0]
       product.title = this.goods.title
@@ -166,9 +176,23 @@ export default {
       product.price = this.goods.realPrice
       product.iid = this.iid
 
-      console.log(product)
-      // this.$store.commit('addToCarl', product)
-       this.$store.dispatch('addToCart', product)
+      // 2.将商品添加到购物车里
+      // this.$store.commit('addToCart', product)
+      // 使用map来映射
+      // this.addToCart(product).then(res => {
+      //   console.log(res)
+      // })
+      this.$store.dispatch('addToCart', product).then(res => {
+        //  this.show = true
+        //  this.message = res
+
+        //  setTimeout(() => {
+        //    this.show = false
+        //    this.message = ''
+        //  }, 1500)
+
+        this.$toast.show(res)
+       })
     }
   }
 }

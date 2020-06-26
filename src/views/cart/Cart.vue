@@ -17,6 +17,7 @@ import NavBar from '@/components/common/navbar/NavBar'
 import CartList from './childComps/CartList'
 import CartBottomBar from './childComps/CartBottomBar'
 
+
 import {mapGetters} from 'vuex'
 
   export default {
@@ -45,7 +46,7 @@ import {mapGetters} from 'vuex'
   height: 100vh;
 }
 .nav-bar {
-  background-color: red;
+  background-color: #ff5777;
   color: #ffffff;
   /* font-weight: 700; */
 }
