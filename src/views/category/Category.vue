@@ -1,15 +1,15 @@
-<!--<template>
+<template>
   <div id="category">
     <nav-bar class="nav-bar"><div slot="center">商品分类</div></nav-bar>
     <div class="content">
       <tab-menu :categories="categories"
-                @selectItem="selectItem">
-          </tab-menu>
+                @selectItem="selectItem"></tab-menu>
+
       <scroll id="tab-content" :data="[categoryData]">
         <div>
           <tab-content-category :subcategories="showSubcategory"></tab-content-category>
           <tab-control :titles="['综合', '新品', '销量']"
-                       @itemClick="tabClick"></tab-control>
+                       @itemClick="tabClick" class="tab-controls"></tab-control>
           <tab-content-detail :category-detail="showCategoryDetail"></tab-content-detail>
         </div>
       </scroll>
@@ -19,17 +19,16 @@
 
 <script>
   import NavBar from '../../components/common/navbar/NavBar'
-
   import TabMenu from './childComps/TabMenu'
   import TabControl from '../../components/content/tabControl/tabControl'
+
   import Scroll from '../../components/common/scroll/Scroll'
   import TabContentCategory from './childComps/TabContentCategory'
-  import TabContentDetail from './childComps/TabContentDetail'
+  import TabContentDetail from './childComps/tabContentDetail'
 
   import {getCategory, getSubcategory, getCategoryDetail} from "../../network/category";
   import {POP, SELL, NEW} from "../../common/const";
   import {tabControlMixin} from "../../common/mixin";
-
   export default {
 		name: "Category",
     components: {
@@ -67,7 +66,8 @@
 		  _getCategory() {
 		    getCategory().then(res => {
 		      // 1.获取分类数据
-		      this.categories = res.data.category.list
+          this.categories = res.data.category.list
+          console.log(this.categories)
           // 2.初始化每个类别的子数据
           for (let i = 0; i < this.categories.length; i++) {
             this.categoryData[i] = {
@@ -99,7 +99,7 @@
         const miniWallkey = this.categories[this.currentIndex].miniWallkey;
         // 2.发送请求,传入miniWallkey和type
 		    getCategoryDetail(miniWallkey, type).then(res => {
-		      // 3.将获取的数据保存下来
+          // 3.将获取的数据保存下来
 		      this.categoryData[this.currentIndex].categoryDetail[type] = res
           this.categoryData = {...this.categoryData}
         })
@@ -118,41 +118,27 @@
   #category {
     height: 100vh;
   }
-
   .nav-bar {
-    background-color: var(--color-tint);
-    font-weight: 700;
-    color: #fff;
+   background-color:#FF69B4;
+   color:#F8F8FF;
   }
-
   .content {
     position: absolute;
+    overflow: hidden;
     left: 0;
     right: 0;
     top: 44px;
     bottom: 49px;
-
     display: flex;
   }
-
   #tab-content {
     height: 100%;
     flex: 1;
+
+    overflow: hidden;
   }
-</style>
--->
-<template>
-  <div>
-    <h2>分类</h2>
-  </div>
-</template>
-
-<script>
-export default {
-  name: "Category"
-}
-</script>
-
-<style scoped>
-
+  .tab-control {
+    position: relative;
+    z-index: 9;
+  }
 </style>

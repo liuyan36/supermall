@@ -5,6 +5,7 @@
 export default {
   name: "TabContent",
   components: {
+    Scroll,
     TabContentCategory,
     TabContentDetail
   },

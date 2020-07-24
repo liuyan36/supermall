@@ -13,12 +13,12 @@
 </template>
 
 <script>
-import Scroll from '../../../components/common/scroll/Scroll'
+  import Scroll from '../../../components/common/scroll/Scroll'
 
 	export default {
-    name: "TabMenu",
+		name: "TabMenu",
     components: {
-      Scroll
+		  Scroll
     },
     props: {
 		  categories: Array
@@ -43,6 +43,8 @@ import Scroll from '../../../components/common/scroll/Scroll'
     height: 100%;
     width: 100px;
     box-sizing: border-box;
+
+
   }
 
   .menu-list-item {
