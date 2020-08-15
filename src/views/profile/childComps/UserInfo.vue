@@ -6,7 +6,7 @@
           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#avatar-default"></use>
         </svg>
       </slot>
-      <div class="login-info left">
+      <div class="login-info left" @click="aaabbb">
         <slot name="user-nickname">
           <div class="aaa">登录/注册</div>
         </slot>
@@ -24,7 +24,12 @@
 
 <script>
 	export default {
-		name: "UserInfo"
+    name: "UserInfo",
+    methods: {
+      aaabbb(){
+        console.log(11)
+      }
+    }
 	}
 </script>
 

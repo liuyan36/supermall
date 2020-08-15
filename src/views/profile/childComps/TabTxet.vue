@@ -3,7 +3,6 @@
     <div class="noe">
       <span @click="btnClick">登录/</span>
       <span @click="binClick">注册</span>
-
     </div>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div class="profile">
-    <nav-bar class="center"><div slot="center">购物街</div></nav-bar>
+    <nav-bar class="center"><div slot="center">个人中心</div></nav-bar>
     <list-view></list-view>
     <user-info></user-info>
   </div>

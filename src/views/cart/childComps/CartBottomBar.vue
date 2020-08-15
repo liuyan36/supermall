@@ -13,7 +13,7 @@
     </div>
 
     <div class="calculate" @click="caluClick">
-      去计算: {{checkLength}}
+      结算: {{checkLength}}
     </div>
   </div>
 </template>
