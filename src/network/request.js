@@ -3,7 +3,7 @@ import axios from 'axios'
 export function request(config) {
   // 1.创建实例
   const instance = axios.create({
-    baseURL: "http://123.207.32.32:8000/api/x6",
+    baseURL: "http://123.207.32.32:8000/api/vl",
   })
 
   // 2.axios拦截器

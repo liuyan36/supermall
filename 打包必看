@@ -1,0 +1,5 @@
+你们打包的话把vue.config.js中的 publicPath: '/supermallB/',修改为 ' ',若是打包在子路径的时候就直接把supermallB修改
+成你的子路径名
+
+
+记得点给赞（Star）

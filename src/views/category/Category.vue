@@ -24,7 +24,7 @@
 
   import Scroll from '../../components/common/scroll/Scroll'
   import TabContentCategory from './childComps/TabContentCategory'
-  import TabContentDetail from './childComps/tabContentDetail'
+  import TabContentDetail from './childComps/TabContentDetail'
 
   import {getCategory, getSubcategory, getCategoryDetail} from "../../network/category";
   import {POP, SELL, NEW} from "../../common/const";

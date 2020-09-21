@@ -14,7 +14,7 @@ module.exports = {
 
 module.exports = {
   // 基本路径
-  publicPath: '../../',
+  publicPath: '/supermallB/',
   // 输出文件目录
   outputDir: 'dist'
 }
