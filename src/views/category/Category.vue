@@ -11,7 +11,7 @@
           <tab-control :titles="['综合', '新品', '销量']"
                        @itemClick="tabClick" class="tab-controls"></tab-control>
           <tab-content-detail :category-detail="showCategoryDetail"></tab-content-detail>
-        </div>1
+        </div>
       </scroll>
     </div>
   </div>
